@@ -97,7 +97,7 @@ const Dashboard = () => {
                                 <Card>
                                     <CardContent style={{ display: 'flex', alignItems: 'center' }}>
                                         <Box flex={1}>
-                                            <Typography variant="h6">Average Quiz Score</Typography>
+                                            <Typography variant="h6">Average Task Scores</Typography>
                                         </Box>
                                         <Box>
                                             <PercentageCircle value={studentsEnrolledPercentage} />
