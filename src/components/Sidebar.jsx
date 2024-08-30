@@ -9,15 +9,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import FeedbackIcon from '@mui/icons-material/Feedback';
+import { Link } from 'react-router-dom';
+import HelpOutlineIcon from '@mui/icons-material/ChatRounded';
 
-const Sidebar = () => {
+const Sidebar = ({ open, handleDrawerToggle }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [open, setOpen] = useState(false);
-
-    const handleDrawerToggle = () => {
-        setOpen(!open);
-    };
 
     return (
         <>
@@ -28,7 +25,7 @@ const Sidebar = () => {
                     color="inherit"
                     aria-label="menu"
                     onClick={handleDrawerToggle}
-                    style={{ position: 'absolute', top: 16, left: 16, zIndex: 1300 }}
+                    style={{ position: 'absolute', top: 38, left: 25, zIndex: 1300 }}
                 >
                     {open ? <CloseIcon /> : <MenuIcon />}
                 </IconButton>
@@ -42,12 +39,13 @@ const Sidebar = () => {
                 sx={{
                     width: 240,
                     flexShrink: 0,
-                    '& .MuiDrawer-paper': { 
-                        width: 240, 
+                    '& .MuiDrawer-paper': {
+                        width: 240,
                         boxSizing: 'border-box',
                         backgroundColor: 'rgba(245, 245, 245, 0.5)',
-                        backdropFilter: 'blur(4px)',  // Adding blur to the background
-                        overflowX: 'hidden', // Prevent horizontal scroll
+                        color: 'black',
+                        backdropFilter: 'blur(4px)', 
+                        overflowX: 'hidden',
                     },
                 }}
             >
@@ -55,45 +53,61 @@ const Sidebar = () => {
                     <img
                         src="/LearnMitra__1_-removebg-preview.png"
                         alt="Logo"
-                        style={{ 
-                            width: '100%', 
-                            maxWidth: '180px', 
+                        style={{
+                            width: '100%',
+                            maxWidth: '180px',
                             height: 'auto',
-                            filter: 'brightness(1.65)' // Increase brightness of the logo
+                            filter: 'brightness(1.65)'
                         }}
                     />
                 </div>
                 <List>
                     {[
-                        { text: 'My Dashboard', icon: <DashboardIcon /> },
-                        { text: 'My Roadmaps', icon: <LibraryBooksIcon /> },
-                        { text: 'Quizes', icon: <MapIcon /> },
-                        { text: "What's New", icon: <NewReleasesIcon /> },
-                        { text: 'Feedback', icon: <FeedbackIcon /> },
-                        { text: 'My Profile', icon: <PersonIcon /> },
-                        { text: 'Logout', icon: <ExitToAppIcon /> }
+                        { text: 'My Dashboard', icon: <DashboardIcon />, path: '/', },
+                        { text: 'My Roadmaps', icon: <LibraryBooksIcon />, path: '/my-roadmaps' },
+                        { text: 'Tasks', icon: <MapIcon />, path: '/quizes' },
+                        { text: "What's New", icon: <NewReleasesIcon />, path: '/WhatsNew' }, 
+                        { text: 'Feedback', icon: <FeedbackIcon />, path: '/feedback' },
+                        { text: 'My Profile', icon: <PersonIcon />, path: '/my-profile' },
+                        { text: 'Logout', icon: <ExitToAppIcon />, path: '#' } 
                     ].map((item, index) => (
-                        <ListItem 
-                            button 
-                            key={index} 
+                        <ListItem
+                            button
+                            key={index}
+                            component={Link}
+                            to={item.path}
                             sx={{
-                                padding:2,
-                                borderBottom: '0.5px solid rgb(211,211,211)', // Add thin line between items
-                                boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)', // Add shadow to items
-                                transition: 'all 0.3s ease', 
+                                padding: 2,
+                                borderBottom: '0.5px solid rgb(211,211,211)',
+                                boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
+                                transition: 'all 0.3s ease',
+                                color: 'black',
                                 '&:hover': {
                                     backgroundColor: '#AFDBF5',
-                                    borderRadius: '20px', // Make the hover effect slightly oval
-                                    transform: 'scale(1.05)', // Zoom in on hover
+                                    borderRadius: '20px',
+                                    transform: 'scale(1.05)',
                                 },
                             }}
                         >
                             <ListItemIcon>{item.icon}</ListItemIcon>
-                            <ListItemText primary={item.text} primaryTypographyProps={{ style: { fontSize: '1.15rem' } }} />
+                            <ListItemText primary={item.text} primaryTypographyProps={{ style: { fontSize: '1.15rem', fontFamily: 'Georgia, serif' } }} />
                         </ListItem>
                     ))}
                 </List>
             </Drawer>
+
+            {/* Icon Button for Bottom Right */}
+            <IconButton
+                color="secondary"
+                style={{
+                    position: 'fixed',
+                    bottom: 40, // Adjust as needed
+                    right: 60,  // Adjust as needed
+                    zIndex: 1300,
+                }}
+            >
+                <HelpOutlineIcon />
+            </IconButton>
         </>
     );
 };
